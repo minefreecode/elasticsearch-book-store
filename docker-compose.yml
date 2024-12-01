@@ -12,11 +12,6 @@ services:
     image: elasticsearch:7.17.23
     container_name: elasticsearch
     hostname: elasticsearch
-    deploy:
-      resources:
-        limits:
-          cpus: "0.95"
-          memory: 4G
     restart: always
     environment:
       - node.name=elasticsearch
@@ -43,11 +38,6 @@ services:
     image: kibana:7.17.23
     container_name: kibana
     hostname: kibana
-    deploy:
-      resources:
-        limits:
-          cpus: "0.95"
-          memory: 2G
     restart: always
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
