@@ -8,7 +8,7 @@ async function bootstrap() {
   });
   await app.listen(process.env.PORT ?? 3000, () => {
     console.log(
-      `Book-store app is running on http://localhost:${process.env.PORT ?? 3000}`,
+      `📘 Book-store app is running on http://localhost:${process.env.PORT ?? 3000}`,
     );
   });
 }
