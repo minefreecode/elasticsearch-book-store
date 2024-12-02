@@ -1,55 +1,39 @@
 "use client";
 
+import { Book } from "@/types/book";
+import { parseCVSToJSON } from "@/utils/functions/parseCSVToJSON";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Papa from "papaparse";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function FileUploader() {
   const [file, setFile] = useState<File | null>(null);
-  const [jsonData, setJsonData] = useState<any[]>([]);
-  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "text/csv": [".csv"] },
     maxFiles: 1,
     onDrop: (acceptedFiles: File[]) => {
       setFile(acceptedFiles[0]);
-      setJsonData([]);
-      setUploadProgress(0);
     },
   });
 
-  const processCsv = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e: any) => {
-      const csvText = e.target.result;
-      try {
-        Papa.parse(csvText, {
-          complete: (result) => {
-            setJsonData(result.data);
-          },
-          header: true,
-          skipEmptyLines: true,
-        });
-      } catch (error) {
-        console.error("Erro ao processar o CSV:", error);
-      }
-    };
-
-    reader.onprogress = (e: ProgressEvent<FileReader>) => {
-      if (e.lengthComputable) {
-        const progress = Math.round((e.loaded / e.total) * 100);
-        setUploadProgress(progress);
-      }
-    };
-
-    reader.readAsText(file);
-    console.log(jsonData);
-  };
-
   const handleUpload = () => {
     if (file) {
-      processCsv(file);
+      setIsLoading(true);
+      const reader = new FileReader();
+      reader.onload = () => {
+        const csvData = reader.result as string;
+        const parsedData = parseCVSToJSON(csvData) as Book[];
+
+        console.log(parsedData);
+
+        setIsLoading(false);
+        setFile(null);
+        toast.success("File processed successfully!");
+      };
+      reader.readAsText(file);
     }
   };
 
@@ -77,38 +61,17 @@ export default function FileUploader() {
         )}
       </div>
 
-      {uploadProgress > 0 && (
-        <div className="relative pt-1 mb-4">
-          <div className="flex mb-2 items-center justify-between">
-            <div>
-              <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-blue-600 bg-blue-200">
-                Uploading
-              </span>
-            </div>
-            <div className="text-right">
-              <span className="text-xs font-semibold inline-block text-blue-600">
-                {uploadProgress}%
-              </span>
-            </div>
-          </div>
-          <div className="overflow-hidden h-2 text-xs flex rounded bg-blue-200">
-            <div
-              style={{ width: `${uploadProgress}%` }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-600"
-            ></div>
-          </div>
-        </div>
-      )}
-
       <button
         onClick={handleUpload}
-        className={`w-full bg-green-500 text-white p-2 rounded-md ${
+        className={`w-full bg-green-500 text-white p-2 rounded-md enabled:hover:bg-green-800 ${
           file ? "" : "cursor-not-allowed"
         }`}
-        disabled={!file}
+        disabled={!file || isLoading}
       >
-        Import
+        {isLoading ? "Loading..." : "Import"}
       </button>
+
+      <ToastContainer />
     </div>
   );
 }
