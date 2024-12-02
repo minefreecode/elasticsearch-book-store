@@ -1,20 +1,78 @@
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export class CreateBookDTO {
   @IsString()
-  @IsNotEmpty()
-  readonly title: string;
+  bookId: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly author: string;
+  title: string;
+
+  @IsOptional()
+  @IsString()
+  series?: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly synopsis: string;
+  author: string;
+
+  @IsOptional()
+  @IsString()
+  rating?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
 
   @IsString()
-  @IsNotEmpty()
-  @IsDateString()
-  readonly publicationDate: string;
+  language: string;
+
+  @IsString()
+  isbn: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  genres?: string[];
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  characters?: string[];
+
+  @IsOptional()
+  @IsString()
+  pages?: string;
+
+  @IsOptional()
+  @IsString()
+  publisher?: string;
+
+  @IsOptional()
+  @IsString()
+  publishDate?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  awards?: string[];
+
+  @IsOptional()
+  @IsString()
+  numRatings?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  ratingsByStars?: string[];
+
+  @IsOptional()
+  @IsString()
+  likedPercent?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  storySetting: string[];
+
+  @IsOptional()
+  @IsString()
+  coverImg?: string;
 }

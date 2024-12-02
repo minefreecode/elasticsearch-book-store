@@ -1,29 +1,86 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsDateString,
-  IsOptional,
-} from 'class-validator';
+import { IsString, IsOptional, IsArray, IsNotEmpty } from 'class-validator';
 
 export class UpdateBookDTO {
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
-  readonly title: string;
+  @IsNotEmpty()
+  title: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  series?: string;
 
   @IsString()
-  @IsNotEmpty()
+  author: string;
+
   @IsOptional()
-  readonly author: string;
+  @IsString()
+  rating?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  description?: string;
 
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
-  readonly synopsis: string;
+  @IsNotEmpty()
+  language?: string;
 
   @IsString()
-  @IsNotEmpty()
   @IsOptional()
-  @IsDateString()
-  readonly publicationDate: string;
+  @IsNotEmpty()
+  isbn?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
+  genres?: string[];
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
+  characters?: string[];
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  pages?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  publisher?: string;
+
+  @IsOptional()
+  @IsString()
+  publishDate?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  awards?: string[];
+
+  @IsOptional()
+  @IsString()
+  numRatings?: string;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  ratingsByStars?: string[];
+
+  @IsOptional()
+  @IsString()
+  likedPercent?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  storySetting: string[];
+
+  @IsOptional()
+  @IsString()
+  coverImg?: string;
 }

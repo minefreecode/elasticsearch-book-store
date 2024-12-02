@@ -21,16 +21,16 @@ export class BookService {
   }
 
   async updateBook(id: string, book: UpdateBookDTO): Promise<Book> {
-    await this.bookRepository.update({ bookId: id }, book);
+    await this.bookRepository.update({ id }, book);
     return this.bookRepository.findOne({
-      where: { bookId: id },
+      where: { id },
     });
   }
 
   async deleteAllBooks(id: string): Promise<Book> {
     await this.bookRepository.softDelete(id);
     return this.bookRepository.findOne({
-      where: { bookId: id },
+      where: { id },
       withDeleted: true,
     });
   }
