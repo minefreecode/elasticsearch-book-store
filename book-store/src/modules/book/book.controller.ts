@@ -33,6 +33,6 @@ export class BookController {
 
   @Delete()
   deleteBook(@Query('id') id: string) {
-    return this.bookService.deleteAllBooks(id);
+    return this.bookService.deleteBookByID(id);
   }
 }

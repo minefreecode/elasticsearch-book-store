@@ -27,7 +27,7 @@ export class BookService {
     });
   }
 
-  async deleteAllBooks(id: string): Promise<Book> {
+  async deleteBookByID(id: string): Promise<Book> {
     await this.bookRepository.softDelete(id);
     return this.bookRepository.findOne({
       where: { id },
