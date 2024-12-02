@@ -4,18 +4,43 @@ export class Migrations1733088705992 implements MigrationInterface {
   name = 'Migrations1733088705992';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TABLE "books" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying NOT NULL, "author" character varying NOT NULL, "synopsis" character varying NOT NULL, "publicationDate" TIMESTAMP NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "deletedAt" TIMESTAMP, CONSTRAINT "PK_f3f2f25a099d24e12545b70b022" PRIMARY KEY ("id"))`,
-    );
-    await queryRunner.query(
-      `CREATE INDEX "IDX_f8b6ad5ace149133556e233355" ON "books" ("deletedAt") `,
-    );
+    await queryRunner.query(`
+      CREATE TABLE "books" (
+        "bookId" TEXT PRIMARY KEY,
+        "title" TEXT NOT NULL,
+        "series" TEXT,
+        "author" TEXT NOT NULL,
+        "rating" TEXT,
+        "description" TEXT,
+        "language" TEXT,
+        "isbn" TEXT,
+        "genres" TEXT[] DEFAULT '{}',
+        "characters" TEXT[] DEFAULT '{}',
+        "pages" TEXT,
+        "publisher" TEXT,
+        "publishDate" TEXT,
+        "awards" TEXT[] DEFAULT '{}',
+        "numRatings" TEXT,
+        "ratingsByStars" TEXT[] DEFAULT '{}',
+        "likedPercent" TEXT,
+        "storySetting" TEXT[] DEFAULT '{}',
+        "coverImg" TEXT,
+        "createdAt" TIMESTAMP DEFAULT now(),
+        "updatedAt" TIMESTAMP DEFAULT now(),
+        "deletedAt" TIMESTAMP
+      );
+    `);
+    await queryRunner.query(`
+      CREATE INDEX "IDX_books_author" ON "books" ("author");
+    `);
+    await queryRunner.query(`
+      CREATE INDEX "IDX_books_title" ON "books" ("title");
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `DROP INDEX "public"."IDX_f8b6ad5ace149133556e233355"`,
-    );
+    await queryRunner.query(`DROP INDEX "IDX_books_author"`);
+    await queryRunner.query(`DROP INDEX "IDX_books_title"`);
     await queryRunner.query(`DROP TABLE "books"`);
   }
 }
