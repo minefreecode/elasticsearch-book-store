@@ -1,5 +1,6 @@
 "use client";
 
+import { useUploadBooks } from "@/service/hooks";
 import { Book } from "@/types/book";
 import { parseCVSToJSON } from "@/utils/functions/parseCSVToJSON";
 import { useState } from "react";
@@ -10,6 +11,8 @@ import "react-toastify/dist/ReactToastify.css";
 export default function FileUploader() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const uploadBooks = useUploadBooks();
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: { "text/csv": [".csv"] },
@@ -27,11 +30,22 @@ export default function FileUploader() {
         const csvData = reader.result as string;
         const parsedData = parseCVSToJSON(csvData) as Book[];
 
-        console.log(parsedData);
+        const batchSize = 100;
+        const batches = [];
+
+        for (let i = 0; i < parsedData.length; i += batchSize) {
+          batches.push(parsedData.slice(i, i + batchSize));
+        }
+
+        for (const batch of batches) {
+          uploadBooks.mutateAsync(batch);
+        }
 
         setIsLoading(false);
-        setFile(null);
-        toast.success("File processed successfully!");
+
+        toast.success(
+          `File processed successfully! Total: ${parsedData.length} lines!`
+        );
       };
       reader.readAsText(file);
     }
