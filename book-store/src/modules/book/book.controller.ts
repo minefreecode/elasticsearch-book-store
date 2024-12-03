@@ -9,8 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { BookService } from './book.service';
-import { CreateBookDTO } from '../dto/create-book.dto';
-import { UpdateBookDTO } from '../dto/update-book.dto';
+import { CreateBookDTO } from './dto/create-book.dto';
+import { UpdateBookDTO } from './dto/update-book.dto';
 
 @Controller('book')
 export class BookController {
@@ -34,5 +34,10 @@ export class BookController {
   @Delete()
   deleteBook(@Query('id') id: string) {
     return this.bookService.deleteBookByID(id);
+  }
+
+  @Post('upload')
+  async uploadBooks(@Body() books: CreateBookDTO[]) {
+    return this.bookService.uploadBooksInBatches(books);
   }
 }
