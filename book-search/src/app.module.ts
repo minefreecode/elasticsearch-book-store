@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { ElasticSearchModule } from './modules/elasticsearch/elasticsearch.module';
 
 @Module({
-  imports: [],
+  imports: [ElasticSearchModule],
   controllers: [],
   providers: [],
 })

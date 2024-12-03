@@ -3,6 +3,9 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3007);
+
+  await app.listen(3007, () => {
+    console.log(`🔎 Book-search app is running on http://localhost:${3007}`);
+  });
 }
 bootstrap();
