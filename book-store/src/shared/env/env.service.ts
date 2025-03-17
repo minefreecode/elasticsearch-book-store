@@ -2,6 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Env } from './env.validator';
 
+/**
+ * Помечаем EnvService как провайдер
+ * Это класс доступный для управления серверами IoC
+ */
 @Injectable()
 export class EnvService {
   constructor(private readonly configService: ConfigService<Env, true>) {}

@@ -1,3 +1,4 @@
+//Определяем тип Book
 export type Book = {
   bookId: string;
   title: string;
