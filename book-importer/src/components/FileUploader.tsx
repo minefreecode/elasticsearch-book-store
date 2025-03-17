@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+//Компонент для загрузки файлов
 export default function FileUploader() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
