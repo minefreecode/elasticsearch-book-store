@@ -5,7 +5,7 @@ import { EnvService } from './env.service';
  *
  */
 @Module({
-  providers: [EnvService],
-  exports: [EnvService],
+  providers: [EnvService],//Объявляем сервис как провайдер
+  exports: [EnvService],//Экспортируем сервис
 })
 export class EnvModule {}

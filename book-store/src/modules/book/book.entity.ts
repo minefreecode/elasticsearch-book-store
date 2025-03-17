@@ -8,22 +8,25 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+/**
+ * Модель книги для использования ORM
+ */
 @Entity('books')
 export class Book {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid') //Первичный ключ
   id: string;
 
-  @Column()
+  @Column() //Колонка
   bookId: string;
 
-  @Index()
-  @Column()
+  @Index()//Индекс
+  @Column()//Колонка
   title: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true })//Колонка
   series: string;
 
-  @Index()
+  @Index()//Индекс
   @Column()
   author: string;
 

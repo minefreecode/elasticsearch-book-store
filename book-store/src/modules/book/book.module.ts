@@ -6,8 +6,8 @@ import { BookService } from './book.service';
 import { RabbitMQConfigModule } from 'src/shared/config/rabbitmq/rabbitmq.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Book]), RabbitMQConfigModule],
-  controllers: [BookController],
-  providers: [BookService],
+  imports: [TypeOrmModule.forFeature([Book]), RabbitMQConfigModule], //Импортирования
+  controllers: [BookController],//Контроллер
+  providers: [BookService],//Объявляем как класс для использования DI
 })
 export class BookModule {}

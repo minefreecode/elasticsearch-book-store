@@ -4,11 +4,13 @@ import { EnvModule } from '../../env/env.module';
 import { EnvService } from '../../env/env.service';
 import { NODE_ENV } from 'src/shared/env/env.validator';
 
+//Включается ORM в проект
 @Module({
   imports: [
+      // Включаем опции асинхронности
     TypeOrmModule.forRootAsync({
-      imports: [EnvModule],
-      inject: [EnvService],
+      imports: [EnvModule],//Импортируем сервис
+      inject: [EnvService],//Инжектим сервис для использования в модуле
       useFactory: async (env: EnvService) => {
         const nodeEnv = env.get('NODE_ENV');
         const isDevelopment = nodeEnv === NODE_ENV.DEVELOPMENT;

@@ -11,8 +11,8 @@ import { BookModule } from './modules/book/book.module';
       cache: true,
       validate: (env) => envSchema.parse(env),
     }),
-    OrmModule,
-    BookModule,
+    OrmModule, //Включаем в приложение модуль ORM
+    BookModule,//Включаем в приложение контроллер для работы с книгами
   ],
   controllers: [],
   providers: [],

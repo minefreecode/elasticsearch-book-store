@@ -6,11 +6,12 @@ export enum NODE_ENV {
   PRODUCTION = 'production',
 }
 
+//Объявляет схему БД
 export const envSchema = z.object({
   PORT: z.string().optional().default('3003'),
-  NODE_ENV: z.nativeEnum(NODE_ENV).optional().default(NODE_ENV.DEVELOPMENT),
-  DATABASE_URL: z.string(),
-  RABBIT_URI: z
+  NODE_ENV: z.nativeEnum(NODE_ENV).optional().default(NODE_ENV.DEVELOPMENT),//Окружение
+  DATABASE_URL: z.string(),//БД
+  RABBIT_URI: z  //URI к RabbitMQ
     .string()
     .optional()
     .default('amqp://guest:guest@localhost:5672'),

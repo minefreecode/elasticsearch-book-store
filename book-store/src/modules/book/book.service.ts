@@ -6,6 +6,9 @@ import { CreateBookDTO } from './dto/create-book.dto';
 import { UpdateBookDTO } from './dto/update-book.dto';
 import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
+/**
+ * Это провайдер для использования книг из контроллера
+ */
 @Injectable()
 export class BookService {
   constructor(
